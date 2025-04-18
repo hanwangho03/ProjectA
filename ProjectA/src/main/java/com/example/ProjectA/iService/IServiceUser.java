@@ -5,6 +5,6 @@ import com.example.ProjectA.entity.User;
 import java.util.List;
 
 
-public interface IRepositoryUser {
+public interface IServiceUser {
      List<User> getAllUser();
 }

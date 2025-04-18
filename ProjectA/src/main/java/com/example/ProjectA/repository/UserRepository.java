@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // bạn có thể thêm các custom query ở đây nếu cần
+    // làm để tạo các phương thưc fillAll ,get ,find , c,r,u,d
+    // hàm subquery
 }
