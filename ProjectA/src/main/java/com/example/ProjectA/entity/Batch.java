@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Data
@@ -43,4 +44,7 @@ public class Batch {
     @ManyToOne
     @JoinColumn(name = "ProductId", nullable = false)
     private Product product;
+
+    @OneToMany(mappedBy = "batch", cascade = CascadeType.ALL)
+    private Set<WarehouseReceiptDetail> warehouseReceiptDetails;
 }
