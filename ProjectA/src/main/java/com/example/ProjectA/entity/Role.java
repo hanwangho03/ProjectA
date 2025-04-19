@@ -32,4 +32,7 @@ public class Role {
     @OneToMany(mappedBy = "role" , cascade = CascadeType.ALL)
     private Set<rolePermission> rolePermission;
 
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<User> user;
+
 }

@@ -44,4 +44,11 @@ public class WarehouseReceipt {
 
     @OneToMany(mappedBy = "warehouseReceipt", cascade = CascadeType.ALL)
     private Set<WarehouseReceiptDetail> warehouseReceiptDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @OneToMany(mappedBy =  "warehouseReceipt",cascade = CascadeType.ALL)
+    private Set<WarehouseReceiptDetail> warehouseReceiptDetail;
 }

@@ -35,4 +35,9 @@ public class WarehouseReceiptDetail {
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Đơn giá không được âm")
     private BigDecimal unitPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "supplierProductId" ,nullable = false)
+    private SupplierProduct supplierProduct;
+
 }

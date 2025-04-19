@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "SupplierProduct")
 @Data
@@ -25,4 +27,7 @@ public class SupplierProduct {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    @OneToMany(mappedBy = "supplierProduct" ,cascade = CascadeType.ALL)
+    private Set<WarehouseReceiptDetail> warehouseReceiptDetail;
 }

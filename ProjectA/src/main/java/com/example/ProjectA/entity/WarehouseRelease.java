@@ -40,4 +40,8 @@ public class WarehouseRelease {
     @OneToMany(mappedBy = "warehouseRelease", cascade = CascadeType.ALL)
     private Set<WarehouseReleaseDetail> warehouseReleaseDetails;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private  User user;
+
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -36,10 +38,13 @@ public class User {
 
     private  String image;
 
-//     @OneToMany(mappedBy = "PhieuNhapkho" , cascade = CascadeType.ALL)
-//     private  set<A> A ;
-//
-//    @OneToMany(mappedBy = "PhieuNhapkho" , cascade = CascadeType.ALL)
-//    private  set<A> A ;
+     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+     private Set<WarehouseRelease> warehouseRelease ;
 
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+     private  Set<WarehouseReceipt> warehouseReceipt ;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private Role role;
 }
