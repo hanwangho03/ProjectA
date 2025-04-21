@@ -4,9 +4,10 @@ import com.example.ProjectA.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // làm để tạo các phương thưc fillAll ,get ,find , c,r,u,d
-    // hàm subquery
+    Optional<User> findByEmail(String email);
 }

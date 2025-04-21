@@ -2,10 +2,7 @@ package com.example.ProjectA.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -22,12 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message =  "Name không được để trống")
+
     private String name;
-    @NotNull(message =  "Email không được để trống")
-    @Email(message =  "Email không hợp lệ" )
+
     private String email;
-    @NotNull(message =  "Password không được để trống")
+
     private  String password;
     @Max(value = 100,message =  "Address chỉ tối đa 100 kí tự")
     @Min(value = 5, message = "Address phải có ít nhất 5 kí tự")
