@@ -10,4 +10,5 @@ public interface IServiceUser {
      ResponseEntity<?> getAllUser();
      ResponseEntity<?> Login(UserLogin user);
      ResponseEntity<?> Register(UserRegister user);
+
 }

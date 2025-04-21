@@ -34,6 +34,7 @@ public class UserServirce implements IServiceUser {
 
     private BloomFilter<String> RBloomFilter;
 
+    // sẽ chạy khi khời tạo dữ án
     @PostConstruct
     public void loadBloomFilter (){
         RBloomFilter = BloomFilter.create(
@@ -81,25 +82,25 @@ public class UserServirce implements IServiceUser {
                 Response<?> response = new Response<>(
                         false,"Not found user",null
                 );
-                return ResponseEntity.status(400).body(response);
+                return ResponseEntity.status(404).body(response);
             }
 
             Optional<User> rUser =  userRepository.findByEmail(data.getEmail());
             if(rUser.isPresent()) {
                 User user = rUser.get();
-                if(user.getPassword().equals(data.getPassword())){
+                if(data.getPassword().equals(auth.matchPassword(user.getPassword()))){
                     String token = auth.generateToken(user.getEmail());
-                    Response<String> response = new Response<>(true,"Login sucessfully",token);
+                    Response<String> response = new Response<>(true,"Login successfully",token);
                     return ResponseEntity.status(200).body(response);
                 }
                 Response<String> response = new Response<>(false,"Login failed",null);
-                return ResponseEntity.status(400).body(response);
+                return ResponseEntity.status(200).body(response);
             }
 
             Response<?> response = new Response<>(
                     false,"Not found user",null
             );
-            return ResponseEntity.status(400).body(response);
+            return ResponseEntity.status(404).body(response);
         } catch (Exception e) {
             System.out.println("Exception when Login" + e.getMessage());
             Response<?>  response = new Response<>(
@@ -125,7 +126,7 @@ public class UserServirce implements IServiceUser {
             userRepository.save(nUser);
             Response<UserDto>  response = new Response<>(true,"Register successfully",UserMapperToUserDto(nUser));
             RBloomFilter.put(nUser.getEmail());
-            return  ResponseEntity.status(200).body(response);
+            return  ResponseEntity.status(201).body(response);
         } catch (Exception e) {
             System.out.println("Exception when Register" + e.getMessage());
             Response<?>  response = new Response<>(

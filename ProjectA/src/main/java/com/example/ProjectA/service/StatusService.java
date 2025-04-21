@@ -2,11 +2,12 @@ package com.example.ProjectA.service;
 
 import com.example.ProjectA.Helper.Response;
 import com.example.ProjectA.Mapper.StatusMapper;
-import com.example.ProjectA.dto.StatusDto;
+import com.example.ProjectA.dto.Status.StatusDto;
+import com.example.ProjectA.dto.Status.StatusUpdate;
 import com.example.ProjectA.entity.Status;
 import com.example.ProjectA.repository.StatusRepository;
 import com.example.ProjectA.iService.IStatusService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class StatusService implements IStatusService {
 
-    private final StatusRepository statusRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
     @Override
     public ResponseEntity<?> getAllStatuses() {
@@ -29,12 +30,13 @@ public class StatusService implements IStatusService {
             }
 
             List<StatusDto> dtoList = statusList.stream()
-                    .map(StatusMapper::StatusToMapper)
+                    .map(StatusMapper::StatusMapperToStatusDto)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(new Response<>(true, "Retrieved all statuses successfully", dtoList));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while retrieving statuses: " + e.getMessage(), null));
+            System.out.println("Error when getAllStatuses : " + e.getMessage());
+            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while retrieving statuses", null));
         }
     }
 
@@ -43,7 +45,7 @@ public class StatusService implements IStatusService {
         try {
             Optional<Status> optionalStatus = statusRepository.findById(id);
             if (optionalStatus.isPresent()) {
-                StatusDto dto = StatusMapper.StatusToMapper(optionalStatus.get());
+                StatusDto dto = StatusMapper.StatusMapperToStatusDto(optionalStatus.get());
                 return ResponseEntity.ok(new Response<>(true, "Status found", dto));
             }
             return ResponseEntity.status(404).body(new Response<>(false, "Status not found", null));
@@ -57,38 +59,41 @@ public class StatusService implements IStatusService {
         try {
             boolean exists = statusRepository.existsByName(statusDto.getName());
             if (exists) {
-                return ResponseEntity.status(400).body(new Response<>(false, "Status with this name already exists", null));
+                return ResponseEntity.status(200).body(new Response<>(false, "Status with this name already exists", null));
             }
 
             Status status = new Status();
             status.setName(statusDto.getName());
 
             Status savedStatus = statusRepository.save(status);
-            return ResponseEntity.status(201).body(new Response<>(true, "Status created successfully", StatusMapper.StatusToMapper(savedStatus)));
+            return ResponseEntity.status(201).body(new Response<>(true, "Status created successfully", StatusMapper.StatusMapperToStatusDto(savedStatus)));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while creating status: " + e.getMessage(), null));
+            System.out.println("Error when createStatus : " + e.getMessage());
+            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while creating status: ", null));
         }
     }
 
     @Override
-    public ResponseEntity<?> updateStatus(Long id, StatusDto statusDto) {
+    public ResponseEntity<?> updateStatus(StatusUpdate StatusUpdate) {
         try {
+            Long id = StatusUpdate.getId();
             Optional<Status> optionalStatus = statusRepository.findById(id);
             if (optionalStatus.isEmpty()) {
                 return ResponseEntity.status(404).body(new Response<>(false, "Status not found", null));
             }
 
-            Optional<Status> existingByName = statusRepository.findByName(statusDto.getName());
+            Optional<Status> existingByName = statusRepository.findByName(StatusUpdate.getName());
             if (existingByName.isPresent() && existingByName.get().getId() != id) {
                 return ResponseEntity.status(400).body(new Response<>(false, "Another status with this name already exists", null));
             }
 
             Status status = optionalStatus.get();
-            status.setName(statusDto.getName());
+            status.setName(StatusUpdate.getName());
             Status updatedStatus = statusRepository.save(status);
-            return ResponseEntity.ok(new Response<>(true, "Status updated successfully", StatusMapper.StatusToMapper(updatedStatus)));
+            return ResponseEntity.ok(new Response<>(true, "Status updated successfully", StatusMapper.StatusMapperToStatusDto(updatedStatus)));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while updating status: " + e.getMessage(), null));
+            System.out.println("Error when updateStatus : " + e.getMessage());
+            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while updating status: ", null));
         }
     }
 
@@ -103,7 +108,8 @@ public class StatusService implements IStatusService {
             statusRepository.deleteById(id);
             return ResponseEntity.ok(new Response<>(true, "Status deleted successfully", null));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while deleting status: " + e.getMessage(), null));
+            System.out.println("Error when deleteStatus : " + e.getMessage());
+            return ResponseEntity.status(500).body(new Response<>(false, "An error occurred while deleting status: ", null));
         }
     }
 }

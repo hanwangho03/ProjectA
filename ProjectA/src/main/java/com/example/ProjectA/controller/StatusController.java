@@ -1,21 +1,19 @@
 package com.example.ProjectA.controller;
 
-import com.example.ProjectA.dto.StatusDto;
-import com.example.ProjectA.entity.Status;
+import com.example.ProjectA.dto.Status.StatusDto;
+import com.example.ProjectA.dto.Status.StatusUpdate;
 import com.example.ProjectA.iService.IStatusService;
-import com.example.ProjectA.repository.StatusRepository;
-import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/statuses")
-@RequiredArgsConstructor
+@RequestMapping("/status")
 public class StatusController {
 
-    private final IStatusService statusService;
+    @Autowired
+    private  IStatusService statusService;
 
     @GetMapping
     public ResponseEntity<?> getAllStatuses() {
@@ -28,13 +26,13 @@ public class StatusController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createStatus(@RequestBody StatusDto statusDto) {
+    public ResponseEntity<?> createStatus(@Valid @RequestBody StatusDto statusDto) {
         return statusService.createStatus(statusDto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody StatusDto statusDto) {
-        return statusService.updateStatus(id, statusDto);
+    @PutMapping
+    public ResponseEntity<?> updateStatus(@Valid @RequestBody StatusUpdate StatusUpdate) {
+        return statusService.updateStatus(StatusUpdate);
     }
 
     @DeleteMapping("/{id}")

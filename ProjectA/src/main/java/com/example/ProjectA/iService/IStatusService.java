@@ -1,17 +1,14 @@
 package com.example.ProjectA.iService;
 
-import com.example.ProjectA.dto.StatusDto;
-import com.example.ProjectA.entity.Status;
+import com.example.ProjectA.dto.Status.StatusDto;
+import com.example.ProjectA.dto.Status.StatusUpdate;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface IStatusService {
     ResponseEntity<?> getAllStatuses();
     ResponseEntity<?> getStatusById(Long id);
     ResponseEntity<?> createStatus(StatusDto statusDto);
-    ResponseEntity<?> updateStatus(Long id, StatusDto statusDto);
+    ResponseEntity<?> updateStatus(StatusUpdate StatusUpdate);
     ResponseEntity<?> deleteStatus(Long id);
 
 }

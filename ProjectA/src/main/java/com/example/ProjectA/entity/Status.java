@@ -21,7 +21,7 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Tên trạng thái không được để trống")
+
     @Column(length = 50, nullable = false)
     private String name;
 

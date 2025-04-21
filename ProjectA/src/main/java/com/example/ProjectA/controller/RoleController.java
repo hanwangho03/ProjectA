@@ -1,20 +1,22 @@
 package com.example.ProjectA.controller;
 
-import com.example.ProjectA.dto.RoleDTO;
-import com.example.ProjectA.dto.StatusDto;
+import com.example.ProjectA.dto.Role.RoleDto;
+import com.example.ProjectA.dto.Role.RoleUpdate;
 import com.example.ProjectA.iService.IServiceRole;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/role")
 public class RoleController {
     @Autowired
     private IServiceRole iServiceRole;
 
     @GetMapping
     public ResponseEntity<?> getAllRole(){
+
         return iServiceRole.getAllRole();
     }
 
@@ -24,17 +26,18 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRole(){
-        return iServiceRole.createRole();
+    public ResponseEntity<?> createRole(@Valid @RequestBody RoleDto role){
+        return iServiceRole.createRole(role);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editRoleById(@RequestBody RoleDTO roleDTO) {
-        return iServiceRole.editRoleById(roleDTO);
+    public ResponseEntity<?> editRoleById(@Valid @RequestBody RoleUpdate role) {
+        return iServiceRole.editRoleById(role);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRole(@PathVariable int id) {
+
         return iServiceRole.deleteRole(id);
     }
 }
