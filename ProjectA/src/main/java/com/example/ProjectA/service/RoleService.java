@@ -49,31 +49,66 @@ public class RoleService implements IServiceRole {
     }
 
     @Async
-    public ResponseEntity<?> createRole(RoleDTO roleDTO){
+    public ResponseEntity<?> getRoleById(Integer id) {
         try {
-            Role role = new Role();
-            role.setName(roleDTO.getName());
-            Role saveRole = roleRepository.save(role);
-            if (roleRepository.existsByName(roleDTO.getName())) {
-                Response<RoleDTO> response = new Response<>(false, "Role name already exists", null);
-                return ResponseEntity.status(400).body(response);
+            Optional<Role> roleOptional = roleRepository.findById(id);
+            if (roleOptional.isEmpty()) {
+                Response<RoleDTO> response = new Response<>(false, "Role not found", null);
+                return ResponseEntity.status(404).body(response);
             }
-            return ResponseEntity.status(201).body(new Response<>(
-                    true,
-                    "Role created successfully",
-                    RoleMapper.RoleMapperToRoleDTO(saveRole)
-            ));
 
+            Response<RoleDTO> response = new Response<>(
+                    true,
+                    "Get role successfully",
+                    RoleMapperToRoleDTO(roleOptional.get())
+            );
+            return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
-            System.out.println("Exception when create account:" + e.getMessage());
-            Response<List<Role>> response = new Response<>(
-                    false,"Please try again when something went wrong",null);
+            System.out.println("Exception when GetRoleById: " + e.getMessage());
+            Response<RoleDTO> response = new Response<>(
+                    false,
+                    "Please try again when something went wrong",
+                    null
+            );
             return ResponseEntity.status(500).body(response);
         }
     }
 
     @Async
-    public ResponseEntity<?> editRole(int id, RoleDTO roleDTO){
+    public ResponseEntity<?> createRole(RoleDTO roleDTO){
+        try {
+            if (roleRepository.existsByName(roleDTO.getName())) {
+                Response<RoleDTO> response = new Response<>(
+                        false,
+                        "Role name already exists",
+                        null
+                );
+                return ResponseEntity.status(400).body(response);
+            }
+
+            Role role = new Role();
+            role.setName(roleDTO.getName());
+            Role savedRole = roleRepository.save(role);
+
+            return ResponseEntity.status(201).body(new Response<>(
+                    true,
+                    "Role created successfully",
+                    RoleMapper.RoleMapperToRoleDTO(savedRole)
+            ));
+        } catch (Exception e) {
+            System.out.println("Exception when create role: " + e.getMessage());
+            Response<RoleDTO> response = new Response<>(
+                    false,
+                    "Please try again when something went wrong",
+                    null
+            );
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
+    @Async
+    public ResponseEntity<?>editRoleById(RoleDTO roleDTO){
+        int id = roleDTO.getId();
         try {
             Optional<Role> roleOptional = roleRepository.findById(id);
             if (roleOptional.isEmpty()) {
@@ -82,7 +117,7 @@ public class RoleService implements IServiceRole {
             }
 
             Role role = roleOptional.get();
-            UpdateRoleFromRoleDto(role, roleDto);
+            role.setName(roleDTO.getName());
             Role updatedRole = roleRepository.save(role);
 
             Response<RoleDTO> response = new Response<>(
@@ -93,6 +128,33 @@ public class RoleService implements IServiceRole {
             return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
             System.out.println("Exception when UpdateRole: " + e.getMessage());
+            Response<RoleDTO> response = new Response<>(
+                    false,
+                    "Please try again when something went wrong",
+                    null
+            );
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
+    @Async
+    public ResponseEntity<?> deleteRole(Integer id) {
+        try {
+            Optional<Role> roleOptional = roleRepository.findById(id);
+            if (roleOptional.isEmpty()) {
+                Response<RoleDTO> response = new Response<>(false, "Role not found", null);
+                return ResponseEntity.status(404).body(response);
+            }
+
+            roleRepository.deleteById(id);
+            Response<String> response = new Response<>(
+                    true,
+                    "Role deleted successfully",
+                    null
+            );
+            return ResponseEntity.status(200).body(response);
+        } catch (Exception e) {
+            System.out.println("Exception when DeleteRole: " + e.getMessage());
             Response<RoleDTO> response = new Response<>(
                     false,
                     "Please try again when something went wrong",
