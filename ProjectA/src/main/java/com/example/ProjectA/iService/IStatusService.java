@@ -13,4 +13,5 @@ public interface IStatusService {
     ResponseEntity<?> createStatus(StatusDto statusDto);
     ResponseEntity<?> updateStatus(Long id, StatusDto statusDto);
     ResponseEntity<?> deleteStatus(Long id);
+
 }
