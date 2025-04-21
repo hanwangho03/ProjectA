@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class WarehouseReleaseDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "warehouseReleaseId", nullable = false)

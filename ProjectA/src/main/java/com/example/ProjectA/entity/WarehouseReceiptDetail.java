@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class WarehouseReceiptDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "warehouseReceiptId", nullable = false)

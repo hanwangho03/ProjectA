@@ -20,15 +20,12 @@ import java.util.Set;
 public class WarehouseRelease {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private LocalDateTime createdAt;
 
     @Min(value = 1, message = "Người tạo phải hợp lệ")
     private int createdBy;
-
-    @Min(value = 1, message = "Trạng thái phải hợp lệ")
-    private int statusId;
 
     private LocalDate dateOfTransport;
 
@@ -44,4 +41,7 @@ public class WarehouseRelease {
     @JoinColumn(name = "userId")
     private  User user;
 
+    @ManyToOne
+    @JoinColumn(name = "statusId", nullable = false)
+    private Status status;
 }

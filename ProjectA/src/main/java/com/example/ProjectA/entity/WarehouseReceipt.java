@@ -21,15 +21,12 @@ import java.util.Set;
 public class WarehouseReceipt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private LocalDateTime createdAt;
 
     @Min(value = 1, message = "Người tạo phải hợp lệ")
     private int createdBy;
-
-    @Min(value = 1, message = "Trạng thái phải hợp lệ")
-    private int statusId;
 
     @Min(value = 1, message = "Nhà cung cấp phải hợp lệ")
     private int supplierId;
@@ -51,4 +48,8 @@ public class WarehouseReceipt {
 
     @OneToMany(mappedBy =  "warehouseReceipt",cascade = CascadeType.ALL)
     private Set<WarehouseReceiptDetail> warehouseReceiptDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "statusId", nullable = false)
+    private Status status;
 }
