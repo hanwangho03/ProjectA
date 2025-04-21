@@ -1,6 +1,7 @@
 package com.example.ProjectA.service;
 
 import com.example.ProjectA.Helper.Response;
+import com.example.ProjectA.dto.UserDto;
 import com.example.ProjectA.entity.User;
 import com.example.ProjectA.iService.IServiceUser;
 import com.example.ProjectA.repository.UserRepository;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.example.ProjectA.Mapper.UserMapper.UserToUserMapper;
 
 
 @Service
@@ -41,21 +45,32 @@ public class UserServirce implements IServiceUser {
     public ResponseEntity<?> getAllUser() {
         try {
             List<User> userList =  userRepository.findAll();
-            if(!userList.isEmpty()){
+            if(userList.isEmpty()){
                 System.out.println("user null");
-                return null;
+                Response<List<User>> response = new Response<>(false, "No users found", null);
+                return ResponseEntity.status(404).body(response);
             }
 
-            Response<List<User>>  response = new Response<>(
-                    true,"Get All user sucessfully",userList
+            Response<List<UserDto>> response = new Response<>(
+                    true,"Get All user sucessfully",
+                     userList.stream().map(user -> UserToUserMapper(user)).collect(Collectors.toList())
             );
             return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
-            System.out.println("Error when get all user" + e.getMessage());
+            System.out.println("Exception when GetAllUser" + e.getMessage());
             Response<List<User>>  response = new Response<>(
-                    false,"Exception when GetAllUser" + e.getMessage(),null
+                    false,"Please try again when something wrong",null
             );
-            return  ResponseEntity.status(500).body(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
+
+//    @Async
+//    public CompletableFuture<ResponseEntity<?>> getUserByEmail(String email){
+//        try {
+//
+//        } catch (Exception e) {
+//            System.out.println("Error when get user by email" + e.getMessage());
+//        }
+//    }
 }
