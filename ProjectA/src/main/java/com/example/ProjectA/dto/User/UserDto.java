@@ -1,4 +1,4 @@
-package com.example.ProjectA.dto;
+package com.example.ProjectA.dto.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +12,6 @@ public class UserDto {
     private String name;
 
     private String email;
-
-    private  String password;
 
     private  String Address;
 
