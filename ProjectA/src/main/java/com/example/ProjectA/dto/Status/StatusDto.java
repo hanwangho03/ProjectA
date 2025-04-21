@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatusDto {
+    private  Long id;
     @NotBlank(message = "Tên trạng thái không được để trống")
     @NotNull(message = "Tên trạng thái không được để trống")
     @Max(value = 25, message = "Tên trạng thái không được quá 25 kí tự")

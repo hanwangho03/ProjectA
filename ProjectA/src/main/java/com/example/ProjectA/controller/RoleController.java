@@ -1,8 +1,9 @@
 package com.example.ProjectA.controller;
 
+import com.example.ProjectA.dto.Role.RoleCreate;
 import com.example.ProjectA.dto.Role.RoleDto;
 import com.example.ProjectA.dto.Role.RoleUpdate;
-import com.example.ProjectA.iService.IServiceRole;
+import com.example.ProjectA.iService.IServiceUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,32 +13,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/role")
 public class RoleController {
     @Autowired
-    private IServiceRole iServiceRole;
+    private IServiceUser iServiceUser;
 
     @GetMapping
     public ResponseEntity<?> getAllRole(){
 
-        return iServiceRole.getAllRole();
+        return iServiceUser.getAllRole();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getRoleById(@PathVariable int id) {
-        return iServiceRole.getRoleById(id);
+        return iServiceUser.getRoleById(id);
     }
 
     @PostMapping
-    public ResponseEntity<?> createRole(@Valid @RequestBody RoleDto role){
-        return iServiceRole.createRole(role);
+    public ResponseEntity<?> createRole(@Valid @RequestBody RoleCreate role){
+        return iServiceUser.createRole(role);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> editRoleById(@Valid @RequestBody RoleUpdate role) {
-        return iServiceRole.editRoleById(role);
+        return iServiceUser.editRoleById(role);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRole(@PathVariable int id) {
 
-        return iServiceRole.deleteRole(id);
+        return iServiceUser.deleteRole(id);
     }
 }

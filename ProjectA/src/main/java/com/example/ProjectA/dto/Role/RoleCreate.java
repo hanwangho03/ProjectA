@@ -9,8 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleDto {
-    private  int id;
+public class RoleCreate {
     @Min(value = 0,message =  "Name phải có ít nhất 1 kí tự")
     @Max(value = 50,message = "Name chỉ cho phép tối đa 50 kí tự")
     @NotNull(message = "Name không được để trống")
