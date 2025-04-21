@@ -1,10 +1,8 @@
 package com.example.ProjectA.iService;
 
-import com.example.ProjectA.entity.User;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 
 public interface IServiceUser {
-     List<User> getAllUser();
+     ResponseEntity<?> getAllUser();
 }
