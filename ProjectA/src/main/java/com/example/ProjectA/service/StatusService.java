@@ -2,6 +2,7 @@ package com.example.ProjectA.service;
 
 import com.example.ProjectA.Helper.Response;
 import com.example.ProjectA.Mapper.StatusMapper;
+import com.example.ProjectA.dto.Status.StatusCreate;
 import com.example.ProjectA.dto.Status.StatusDto;
 import com.example.ProjectA.dto.Status.StatusUpdate;
 import com.example.ProjectA.entity.Status;
@@ -55,7 +56,7 @@ public class StatusService implements IStatusService {
     }
 
     @Override
-    public ResponseEntity<?> createStatus(StatusDto statusDto) {
+    public ResponseEntity<?> createStatus(StatusCreate statusDto) {
         try {
             boolean exists = statusRepository.existsByName(statusDto.getName());
             if (exists) {

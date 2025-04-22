@@ -1,5 +1,6 @@
 package com.example.ProjectA.controller;
 
+import com.example.ProjectA.dto.Status.StatusCreate;
 import com.example.ProjectA.dto.Status.StatusDto;
 import com.example.ProjectA.dto.Status.StatusUpdate;
 import com.example.ProjectA.iService.IStatusService;
@@ -26,7 +27,7 @@ public class StatusController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createStatus(@Valid @RequestBody StatusDto statusDto) {
+    public ResponseEntity<?> createStatus(@Valid @RequestBody StatusCreate statusDto) {
         return statusService.createStatus(statusDto);
     }
 

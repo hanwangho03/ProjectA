@@ -1,0 +1,19 @@
+package com.example.ProjectA.dto.WarehouseReceipt;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class WarehouseReceiptCreate {
+    private int createdBy;
+    private Long supplierId;
+    private BigDecimal total;
+    private Long statusId;
+}
