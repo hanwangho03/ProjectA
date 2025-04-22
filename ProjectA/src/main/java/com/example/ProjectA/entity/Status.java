@@ -19,7 +19,7 @@ public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     @Column(length = 50, nullable = false)

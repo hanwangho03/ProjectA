@@ -10,15 +10,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import javax.crypto.spec.SecretKeySpec;
 
 @Service
 public class AuthService {
     @Value("${app.secretKey}")
     private static String secretKey;
-    private static final String SECRET_KEY = secretKey;
+    private static final String SECRET_KEY = "ksdfhdss456456dfsd43546kfssdfs456fknksfsdnvsdkf32423rsdsdbfh";
 
     private Key getSignKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
 
     public String extractUsername(String token) {
@@ -75,7 +76,7 @@ public class AuthService {
     }
 
 
-    public  boolean matchPassword(String plainPassword) {
-        return encoder.matches(plainPassword, secretKey);
+    public boolean matchPassword(String plainPassword, String encodedPassword) {
+        return encoder.matches(plainPassword, encodedPassword);
     }
 }

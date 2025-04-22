@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class TypeOfProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Tên loại sản phẩm không được để trống")
     @Size(max = 100, message = "Tên loại sản phẩm không được vượt quá 100 ký tự")

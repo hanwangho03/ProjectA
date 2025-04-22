@@ -20,14 +20,14 @@ import java.math.BigDecimal;
 public class WarehouseReceiptDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long  id;
 
     @ManyToOne
-    @JoinColumn(name = "warehouseReceiptId", nullable = false)
+    @JoinColumn(name = "warehouseReceipt_Id")
     private WarehouseReceipt warehouseReceipt;
 
     @ManyToOne
-    @JoinColumn(name = "batchId", nullable = false)
+    @JoinColumn(name = "batch_Id")
     private Batch batch;
 
     @Positive(message = "Số lượng phải lớn hơn 0")
@@ -37,7 +37,7 @@ public class WarehouseReceiptDetail {
     private BigDecimal unitPrice;
 
     @ManyToOne
-    @JoinColumn(name = "supplierProductId" ,nullable = false)
+    @JoinColumn(name = "supplierProductId" )
     private SupplierProduct supplierProduct;
 
 }

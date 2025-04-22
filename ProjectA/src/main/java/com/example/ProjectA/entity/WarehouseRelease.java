@@ -20,7 +20,7 @@ import java.util.Set;
 public class WarehouseRelease {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private LocalDateTime createdAt;
 

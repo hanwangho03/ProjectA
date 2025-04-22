@@ -7,7 +7,13 @@ import com.example.ProjectA.iService.IServiceUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.ProjectA.Helper.BindlingResultHelper.BindlingResultHelper;
 
 
 @CrossOrigin(origins = "http://localhost:5173") // hoặc "http://localhost:5173" khi dev
@@ -22,13 +28,19 @@ public class UserController {
         return  iSUser.getAllUser();
     }
 
-    @PostMapping("/Login")
-    public ResponseEntity<?> Login(@Valid @RequestBody UserLogin user) {
+    @PostMapping("/login")
+    public ResponseEntity<?> Login(@Valid @RequestBody UserLogin user,BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(BindlingResultHelper(bindingResult));
+        }
         return iSUser.Login(user);
     }
 
-    @PostMapping("/Register")
-    public ResponseEntity<?> Register(@Valid @RequestBody UserRegister user) {
+    @PostMapping("/register")
+    public ResponseEntity<?> Register(@Valid @RequestBody UserRegister user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(BindlingResultHelper(bindingResult));
+        }
         return iSUser.Register(user);
     }
 }

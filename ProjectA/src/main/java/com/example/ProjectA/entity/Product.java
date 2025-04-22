@@ -20,7 +20,7 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Tên sản phẩm không được để trống")
     @Size(max = 100, message = "Tên sản phẩm không được vượt quá 100 ký tự")

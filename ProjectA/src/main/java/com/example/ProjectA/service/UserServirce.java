@@ -95,7 +95,9 @@ public class UserServirce implements IServiceUser {
             Optional<User> rUser =  userRepository.findByEmail(data.getEmail());
             if(rUser.isPresent()) {
                 User user = rUser.get();
-                if(data.getPassword().equals(auth.matchPassword(user.getPassword()))){
+                System.out.println(user.getPassword());
+                System.out.println(auth.hashPassword(data.getPassword()));
+                if(auth.matchPassword(data.getPassword(),user.getPassword())){
                     String token = auth.generateToken(user.getEmail());
                     Response<String> response = new Response<>(true,"Login successfully",token);
                     return ResponseEntity.status(200).body(response);
@@ -130,6 +132,8 @@ public class UserServirce implements IServiceUser {
             nUser.setName(data.getName());
             nUser.setEmail(data.getEmail());
             nUser.setPassword(auth.hashPassword(data.getPassword()));
+
+            nUser.setRole(roleRepository.findByName("User").get());
             userRepository.save(nUser);
             Response<UserDto>  response = new Response<>(true,"Register successfully",UserMapperToUserDto(nUser));
             RBloomFilter.put(nUser.getEmail());
