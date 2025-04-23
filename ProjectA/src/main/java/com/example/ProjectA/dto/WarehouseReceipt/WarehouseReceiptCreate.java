@@ -15,9 +15,6 @@ import java.math.BigDecimal;
 @Builder
 public class WarehouseReceiptCreate {
 
-    @Min(value = 1)
-    private Long supplierId;
-
     @DecimalMin(value = "0.0", inclusive = true)
     private BigDecimal total;
 

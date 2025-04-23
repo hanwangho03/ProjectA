@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 @Builder
 public class WarehouseReceiptUpdate {
     private Long id;
-    private Long supplierId;
     private BigDecimal total;
     private Long statusId;
 }
