@@ -15,9 +15,8 @@ import java.time.LocalDateTime;
 public class WarehouseReceiptDto {
     private Long id;
     private LocalDateTime createdAt;
-    private int createdBy;
+    private Long userId;
     private BigDecimal total;
-    private Long supplierId;
     private String supplierName;
     private Long statusId;
     private String statusName;

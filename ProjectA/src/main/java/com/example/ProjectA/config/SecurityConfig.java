@@ -17,6 +17,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").permitAll() // Cho phép các request auth
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/warehouse-receipts/**").permitAll()
+                        .requestMatchers("/suppliers/**").permitAll()
                         .anyRequest().authenticated()
 
                 )

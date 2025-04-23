@@ -1,5 +1,7 @@
 package com.example.ProjectA.dto.WarehouseReceipt;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +14,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class WarehouseReceiptCreate {
-    private int createdBy;
+
+    @Min(value = 1)
     private Long supplierId;
+
+    @DecimalMin(value = "0.0", inclusive = true)
     private BigDecimal total;
+
+    private Long userId;
     private Long statusId;
 }
