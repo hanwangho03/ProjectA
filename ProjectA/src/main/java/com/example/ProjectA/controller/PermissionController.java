@@ -6,7 +6,10 @@ import com.example.ProjectA.iService.IServicePermission;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import static com.example.ProjectA.Helper.BindlingResultHelper.BindlingResultHelper;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -21,12 +24,15 @@ public class PermissionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPermissionById(@PathVariable Integer id) {
+    public ResponseEntity<?> getPermissionById(@PathVariable Long id) {
         return permissionService.getPermissionById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createPermission(@Valid @RequestBody PermissionCreate permissionDto) {
+    @PostMapping("/create")
+    public ResponseEntity<?> createPermission(@Valid @RequestBody PermissionCreate permissionDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(BindlingResultHelper(bindingResult));
+        }
         return permissionService.createPermission(permissionDto);
     }
 
@@ -36,7 +42,7 @@ public class PermissionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePermission(@PathVariable Integer id) {
+    public ResponseEntity<?> deletePermission(@PathVariable Long id) {
         return permissionService.deletePermission(id);
     }
 }

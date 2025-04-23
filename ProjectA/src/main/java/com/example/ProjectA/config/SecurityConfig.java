@@ -16,10 +16,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Tắt CSRF cho API
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").permitAll() // Cho phép các request auth
-                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/role/**").permitAll()
+                        .requestMatchers("/status/**").permitAll()
                         .requestMatchers("/product/**").permitAll()
-                        .requestMatchers("/warehouse-receipts/**").permitAll()
-                        .requestMatchers("/suppliers/**").permitAll()
+                        .requestMatchers("/rolePermission/**").permitAll()
+						     .requestMatchers("/warehouse-receipts/**").permitAll()
+                        .requestMatchers("/permission/**").permitAll()
+						 .requestMatchers("/suppliers/**").permitAll()
                         .anyRequest().authenticated()
 
                 )

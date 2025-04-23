@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PermissionUpdate {
-    private int id;
+    private Long id;
 
     @NotNull(message = "Name không được để trống")
     @NotBlank(message = "Name không được để rỗng")

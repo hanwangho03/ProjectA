@@ -6,10 +6,13 @@ import com.example.ProjectA.iService.IServiceRolePermission;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.ProjectA.Helper.BindlingResultHelper.BindlingResultHelper;
+
 @RestController
-@RequestMapping("/rolepermission")
+@RequestMapping("/rolePermission")
 public class RolePrermissionController {
     @Autowired
     private IServiceRolePermission rolePermissionService;
@@ -24,8 +27,11 @@ public class RolePrermissionController {
         return rolePermissionService.getRolePermissionById(id);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> createRolePermission(@Valid @RequestBody RolePermissionCreate rolePermissionCreate){
+    @PostMapping("/create")
+    public ResponseEntity<?> createRolePermission(@Valid @RequestBody RolePermissionCreate rolePermissionCreate, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(BindlingResultHelper(bindingResult));
+        }
         return rolePermissionService.createRolePermission(rolePermissionCreate);
     }
 

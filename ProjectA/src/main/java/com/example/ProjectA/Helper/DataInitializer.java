@@ -25,7 +25,7 @@ public class DataInitializer implements CommandLineRunner {
             Role role = new Role();
             role.setName(roleName);
             roleRepository.save(role);
-            System.out.println("Created role: " + roleName);
+
         }
     }
 }

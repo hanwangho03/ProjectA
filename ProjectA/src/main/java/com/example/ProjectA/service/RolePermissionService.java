@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,22 +91,22 @@ public class RolePermissionService implements IServiceRolePermission {
         }
     }
 
-    @Async
+
     public ResponseEntity<?> createRolePermission(RolePermissionCreate data) {
         try {
-            Optional<Role> roleOptional = roleRepository.findById(data.getRoleId().getId());
+            Optional<Role> roleOptional = roleRepository.findById(data.getPermissionId());
             if (roleOptional.isEmpty()) {
                 Response<RolePermissionDto> response = new Response<>(false, "Role not found", null);
                 return ResponseEntity.status(404).body(response);
             }
 
-            Optional<Permission> permissionOptional = permissionRepository.findById(data.getPermissionId().getId());
+            Optional<Permission> permissionOptional = permissionRepository.findById(data.getPermissionId());
             if (permissionOptional.isEmpty()) {
                 Response<RolePermissionDto> response = new Response<>(false, "Permission not found", null);
                 return ResponseEntity.status(404).body(response);
             }
 
-            if (rolePermissionRepository.existsByRoleIdAndPermissionId(data.getPermissionId().getId(), data.getRoleId().getId())) {
+            if (rolePermissionRepository.existsByRoleIdAndPermissionId(data.getPermissionId(), data.getRoleId())) {
                 Response<RolePermissionDto> response = new Response<>(
                         false,
                         "Role already has this permission",
@@ -113,7 +116,9 @@ public class RolePermissionService implements IServiceRolePermission {
             }
 
             RolePermission rolePermission = new RolePermission();
-            rolePermission.setPermission(data.getPermissionId());
+            rolePermission.setPermission(permissionOptional.get());
+            rolePermission.setRole(roleOptional.get());
+            rolePermission.setCreateDate(new Date());
 
             RolePermission savedRolePermission = rolePermissionRepository.save(rolePermission);
 
@@ -134,7 +139,7 @@ public class RolePermissionService implements IServiceRolePermission {
         }
     }
 
-    @Async
+
     public ResponseEntity<?> updateRolePermission(RolePermissionUpdate data) {
         Long id = data.getId().longValue();
         try {
@@ -177,7 +182,7 @@ public class RolePermissionService implements IServiceRolePermission {
             return ResponseEntity.status(500).body(response);
         }
     }
-    @Async
+
     public ResponseEntity<?> deleteRolePermission(Long id) {
         try {
             Optional<RolePermission> rolePermissionOptional = rolePermissionRepository.findById(id);

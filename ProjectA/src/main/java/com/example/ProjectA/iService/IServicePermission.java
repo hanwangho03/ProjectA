@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface IServicePermission {
     ResponseEntity<?> getAllPermissions();
-    ResponseEntity<?> getPermissionById(int id);
+    ResponseEntity<?> getPermissionById(Long id);
     ResponseEntity<?> createPermission(PermissionCreate data);
     ResponseEntity<?> updatePermission(PermissionUpdate data);
-    ResponseEntity<?> deletePermission(int id);
+    ResponseEntity<?> deletePermission(Long id);
 }

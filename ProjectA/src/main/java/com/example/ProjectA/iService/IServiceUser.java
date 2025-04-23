@@ -14,10 +14,10 @@ public interface IServiceUser {
      ResponseEntity<?> Login(UserLogin user);
      ResponseEntity<?> Register(UserRegister user);
      ResponseEntity<?> getAllRole();
-     ResponseEntity<?> getRoleById(int id);
+     ResponseEntity<?> getRoleById(Long id);
      // bug
      ResponseEntity<?> createRole(RoleCreate role);
      // bug
      ResponseEntity<?> editRoleById(RoleUpdate RoleUpdate);
-     ResponseEntity<?> deleteRole(int id);
+     ResponseEntity<?> deleteRole(Long id);
 }

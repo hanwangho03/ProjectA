@@ -176,7 +176,7 @@ public class UserServirce implements IServiceUser {
     }
 
     @Override
-    public ResponseEntity<?> getRoleById(int id) {
+    public ResponseEntity<?> getRoleById(Long id) {
         try {
             Optional<Role> roleOptional = roleRepository.findById(id);
             if (roleOptional.isEmpty()) {
@@ -235,7 +235,7 @@ public class UserServirce implements IServiceUser {
 
     @Async
     public ResponseEntity<?>editRoleById(RoleUpdate data){
-        int id = data.getId();
+        Long id = data.getId();
         try {
             Optional<Role> roleOptional = roleRepository.findById(id);
             if (roleOptional.isEmpty()) {
@@ -265,7 +265,7 @@ public class UserServirce implements IServiceUser {
     }
 
     @Async
-    public ResponseEntity<?> deleteRole(int id) {
+    public ResponseEntity<?> deleteRole(Long id) {
         try {
             Optional<Role> roleOptional = roleRepository.findById(id);
             if (roleOptional.isEmpty()) {

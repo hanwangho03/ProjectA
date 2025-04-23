@@ -11,11 +11,10 @@ import java.util.Date;
 public class RolePermissionCreate {
 
     @NotNull(message = "Permission ID không được để trống")
-    private Permission permissionId;
+    private Long permissionId;
 
     @NotNull(message = "Role ID không được để trống")
-    private Role roleId;
+    private Long roleId;
 
-    @NotNull(message = "Create Date không được trống")
-    private Date createDate;
+
 }

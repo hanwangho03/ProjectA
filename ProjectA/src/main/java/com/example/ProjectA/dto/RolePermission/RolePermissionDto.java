@@ -12,10 +12,10 @@ public class RolePermissionDto {
     private Long id;
 
     @NotNull(message = "Permission ID không được để trống")
-    private Permission permission;
+    private Long permissionId;
 
     @NotNull(message = "Role ID không được để trống")
-    private Role role;
+    private Long roleId;
 
     @NotNull(message = "Create Date không được trống")
     private Date createDate;

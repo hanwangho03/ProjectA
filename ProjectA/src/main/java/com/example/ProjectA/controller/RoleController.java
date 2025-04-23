@@ -22,11 +22,11 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getRoleById(@PathVariable int id) {
+    public ResponseEntity<?> getRoleById(@PathVariable Long id) {
         return iServiceUser.getRoleById(id);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createRole(@Valid @RequestBody RoleCreate role){
         return iServiceUser.createRole(role);
     }
@@ -37,7 +37,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRole(@PathVariable int id) {
+    public ResponseEntity<?> deleteRole(@PathVariable Long id) {
 
         return iServiceUser.deleteRole(id);
     }

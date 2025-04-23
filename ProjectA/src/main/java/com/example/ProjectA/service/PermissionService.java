@@ -51,7 +51,7 @@ public class PermissionService implements IServicePermission {
         }
     }
 
-    public ResponseEntity<?> getPermissionById(int id) {
+    public ResponseEntity<?> getPermissionById(Long id) {
         try {
             Optional<Permission> permissionOptional = permissionRepository.findById(id);
             if (permissionOptional.isEmpty()) {
@@ -112,7 +112,7 @@ public class PermissionService implements IServicePermission {
 
     @Async
     public ResponseEntity<?> updatePermission(PermissionUpdate data) {
-        int id = data.getId();
+        Long id = data.getId();
         try {
             Optional<Permission> permissionOptional = permissionRepository.findById(id);
             if (permissionOptional.isEmpty()) {
@@ -143,7 +143,7 @@ public class PermissionService implements IServicePermission {
     }
 
     @Async
-    public ResponseEntity<?> deletePermission(int id) {
+    public ResponseEntity<?> deletePermission(Long id) {
         try {
             Optional<Permission> permissionOptional = permissionRepository.findById(id);
             if (permissionOptional.isEmpty()) {
