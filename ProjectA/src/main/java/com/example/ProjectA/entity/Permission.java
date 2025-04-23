@@ -35,6 +35,6 @@ public class Permission {
     private String Actions;
 
     @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL)
-    private Set<rolePermission> rolePermission;
+    private Set<RolePermission> rolePermission;
 
 }

@@ -2,10 +2,6 @@ package com.example.ProjectA.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +22,7 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role" , cascade = CascadeType.ALL)
-    private Set<rolePermission> rolePermission;
+    private Set<RolePermission> rolePermission;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<User> user;
