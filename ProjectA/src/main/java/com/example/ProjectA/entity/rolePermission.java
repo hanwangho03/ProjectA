@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Builder
 
-public class rolePermission {
+public class RolePermission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
